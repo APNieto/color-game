@@ -4,11 +4,23 @@ body {
 }
 
 
+
 /* Header */
 #header{
     background-color: var(--primary-header-color);
     color: white;
     text-align: center;
+}
+#info-display{
+    display: flex;
+    justify-content: center;
+    position: relative;    
+    height: 60px;
+}
+#header-color-code{
+    position: absolute;    
+    margin-top: 0;
+    font-size: 1.8rem;
 }
 
 
@@ -53,4 +65,10 @@ body {
     height: min(27vw, 180px);
     cursor: pointer;
     border-radius: 10%;
+}
+.guess-result{
+    position: absolute;
+    margin-top: 0;
+    font-size: 1.5rem;
+    transition: opacity 300ms;
 }

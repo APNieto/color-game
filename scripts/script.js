@@ -1,15 +1,21 @@
 // DOM elements
 const headerColorCode = document.getElementById('header-color-code')
+const guessResult = document.getElementById('guess-result')
 const scoreSpan = document.getElementById('score')
 const easyButton = document.getElementById('easy-button')
 const hardButton = document.getElementById('hard-button')
 const boxesContainer = document.getElementById('boxes-container')
 const colorBoxes = document.getElementsByClassName('color-boxes')
 
+console.log(colorBoxes); // TEST PRINT
+
 
 // Global variables
 let chosenRandomBoxNr, chosenRandomColor
 let score = 0
+let attemptsLeft
+
+
 
 // Event listeners
 hardButton.addEventListener('click', difficultySelector)
@@ -17,6 +23,7 @@ easyButton.addEventListener('click', difficultySelector)
 for (let box of colorBoxes) {
     box.addEventListener('click', confirmGuess)
 }
+
 
 
 // Functions
@@ -34,6 +41,7 @@ function assignRandomColors() {
     // choose a random color and write its code in the site's header
     chosenRandomBoxNr = Math.floor(Math.random() * colorBoxes.length)
     chosenRandomColor = generateRandomColor()
+    headerColorCode.style.display = 'block'
     headerColorCode.textContent = chosenRandomColor.toUpperCase()
     
     // Loop through the boxes and assign the colors
@@ -46,24 +54,40 @@ function assignRandomColors() {
             }
         }
     }
+}
 
-    return [chosenRandomBoxNr, chosenRandomColor]
+function toggleHeaderInfo(result) {
+    // Helper function: Momentarily hides the RGB info and shows
+    // the correct/wrong message of the last guess
+    headerColorCode.style.display = 'none'
+    guessResult.style.visibility = 'visible'
+    guessResult.style.opacity = '1'
+    guessResult.textContent = result
+    setTimeout(() => {
+        guessResult.style.visibility = 'hidden'
+        guessResult.style.opacity = '0'
+        assignRandomColors()
+    }, 1000)
 }
 
 function confirmGuess(event) {
+    // Updates the score and the header
+    // info area after each guess
     if (event.target.style.backgroundColor == chosenRandomColor) {
-        alert('Correct!')
         score++
         scoreSpan.textContent = score
+        toggleHeaderInfo('Correct!')
     } else {
-        alert('Wrong!')
         score = 0
         scoreSpan.textContent = score
+        toggleHeaderInfo('Wrong!')
     }
-    assignRandomColors()
 }
 
 function difficultySelector(event) {
+    // Creates a new game: updates the score, attempts
+    // left, and renews the colors of all boxes;
+    // adds or removes boxes according to the selected difficulty level
     switch(event.target.textContent) {        
         case 'HARD':
             if (colorBoxes.length === 3) {
@@ -78,6 +102,7 @@ function difficultySelector(event) {
             hardButton.classList.add('activated-difficulty')
             score = 0
             scoreSpan.textContent = score            
+            attemptsLeft = 2
             assignRandomColors()
             break;            
         case 'EASY':
@@ -92,9 +117,12 @@ function difficultySelector(event) {
             easyButton.classList.add('activated-difficulty')
             score = 0
             scoreSpan.textContent = score
+            attemptsLeft = 3
             assignRandomColors()
             break;
         }
 }
         
+
+
 assignRandomColors()
