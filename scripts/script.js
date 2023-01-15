@@ -26,6 +26,7 @@ hardButton.addEventListener('click', difficultySelector)
 easyButton.addEventListener('click', difficultySelector)
 for (let box of colorBoxes) {
     box.addEventListener('click', confirmGuess)
+    box.addEventListener('contextmenu', confirmGuess)
 }
 
 
@@ -68,6 +69,7 @@ function assignRandomColors() {
 }
 
 function confirmGuess(event) {
+    event.preventDefault()
     // Briefly shows the guess result on the selected box; updates the score and
     // the remaining attempts; if no attempts left, shows the correct box and 
     // and resets the game; blocks any clicks on boxes while reactions are running

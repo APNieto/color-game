@@ -1,3 +1,7 @@
+* {
+    user-select: none;
+}
+
 body {
     margin: 0;
     --background-color: #232323;
@@ -98,12 +102,12 @@ body {
 }
 @media (hover:hover) {
     .color-boxes:hover{
-        transform: scale(1.08)!important;
+        transform: scale(1.08);
     }
 }
 @media (hover:none) {
     .color-boxes:active{
-        transform: scale(1.08)!important;
+        transform: scale(1.08);
     }
 }
 
