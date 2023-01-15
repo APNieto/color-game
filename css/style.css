@@ -99,3 +99,10 @@ body {
     visibility: visible;   
     opacity: 1;
 }
+
+#version-nr{
+    margin: auto;
+    width: fit-content;
+    font-size: 0.8rem;
+    color: aliceblue;
+}
