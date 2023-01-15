@@ -80,9 +80,6 @@ body {
     border-radius: 10%;
     transition: background-color 300ms, transform 180ms;
 }
-.color-boxes:hover{
-    transform: scale(1.08)!important;
-}
 .color-boxes-hidden{
     background-color: var(--background-color)!important;
 }
@@ -99,6 +96,20 @@ body {
     visibility: visible;   
     opacity: 1;
 }
+@media (hover:hover) {
+    .color-boxes:hover{
+        transform: scale(1.08)!important;
+    }
+}
+@media (hover:none) {
+    .color-boxes:active{
+        transform: scale(1.08)!important;
+    }
+}
+
+
+
+
 
 #version-nr{
     padding-top: 30px;
