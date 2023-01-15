@@ -17,7 +17,8 @@ let score = 0
 let currentDifficulty = 'EASY'
 const attemptsByDifficulty = {'EASY': 1, 'HARD': 2}
 let attemptsLeft = attemptsByDifficulty[currentDifficulty]
-let timeoutCorrectCase, timeoutWrongCase1, timeoutWrongCase2
+let isGuessReactionRunning = false
+
 
 
 // Event listeners
@@ -31,7 +32,7 @@ for (let box of colorBoxes) {
 
 // Functions
 function generateRandomColor() {
-    // Generates a string with a random RGB code for use in CSS
+    // Generate a string with a random RGB code for use in CSS
     let randomRed = Math.floor(Math.random() * 256)
     let randomGreen = Math.floor(Math.random() * 256)
     let randomBlue = Math.floor(Math.random() * 256)
@@ -67,42 +68,41 @@ function assignRandomColors() {
 }
 
 function confirmGuess(event) {
-    // Briefly shows the guess result on the selected box;
-    // updates the score and the remaining attempts; if no 
-    // attempts left shows the correct box and resets the game 
+    // Briefly shows the guess result on the selected box; updates the score and
+    // the remaining attempts; if no attempts left, shows the correct box and 
+    // and resets the game; blocks any clicks on boxes while reactions are running
     let guessResultText = event.target.children[0]
-    //CORRECT CASE
-    if (event.target.style.backgroundColor == chosenRandomColor) {
-        if (timeoutCorrectCase || timeoutWrongCase1 || timeoutWrongCase2) {
-            //pass            
-        } else {            
-            guessResultText.classList.toggle('guess-result-visible')
-            guessResultText.textContent = 'Correct!'
-            header.style.backgroundColor = chosenRandomColor
-            for (let box of colorBoxes) {
-                box.style.backgroundColor = chosenRandomColor
-            }
-            score++
-            timeoutCorrectCase = setTimeout(() => {
-                timeoutCorrectCase = undefined
-                guessResultText.classList.toggle('guess-result-visible')            
-                assignRandomColors()
-            }, 1500);
+    if (isGuessReactionRunning) {
+        // pass
+    } else {
+        //CORRECT CASE
+        if (event.target.style.backgroundColor == chosenRandomColor) {         
+                isGuessReactionRunning = true     
+                guessResultText.classList.toggle('guess-result-visible')
+                guessResultText.textContent = 'Correct!'
+                header.style.backgroundColor = chosenRandomColor
+                for (let box of colorBoxes) {
+                    box.style.backgroundColor = chosenRandomColor
+                }
+                score++
+                setTimeout(() => {
+                    isGuessReactionRunning = false     
+                    guessResultText.classList.toggle('guess-result-visible')            
+                    assignRandomColors()
+                }, 1500);
         }
-    }
-    //WRONG CASE
-    else {     
-        if (timeoutCorrectCase || timeoutWrongCase1 || timeoutWrongCase2) {
-            //pass
-        } else {
+        //WRONG CASE
+        else {     
+            isGuessReactionRunning = true     
             guessResultText.classList.toggle('guess-result-visible')
             guessResultText.textContent = 'Wrong!'
             event.target.classList.add('color-boxes-hidden')
-            timeoutWrongCase1 = setTimeout(() => {
-                timeoutWrongCase1 = undefined
+            setTimeout(() => {
+                isGuessReactionRunning = false     
                 guessResultText.classList.toggle('guess-result-visible')            
                 attemptsLeft--
                 if (attemptsLeft == 0) {
+                    isGuessReactionRunning = true     
                     for (let colorBox of colorBoxes) {
                         if (colorBox.style.backgroundColor == chosenRandomColor) {
                             correctBoxText = colorBox.children[0]
@@ -110,8 +110,8 @@ function confirmGuess(event) {
                             correctBoxText.textContent = 'Correct one!'
                         }
                     }
-                    timeoutWrongCase2 = setTimeout(() => {
-                        timeoutWrongCase2 = undefined
+                    setTimeout(() => {
+                        isGuessReactionRunning = false     
                         correctBoxText.classList.toggle('guess-result-visible')
                         score = 0
                         assignRandomColors()
@@ -123,9 +123,8 @@ function confirmGuess(event) {
 }
 
 function difficultySelector(event) {
-    // Creates a new game: updates the score, attempts
-    // left, and renews the colors of all boxes;
-    // adds or removes boxes according to the selected difficulty level
+    // Creates a new game: updates the score, attempts left, and renews the colors 
+    // of all boxes; adds or removes boxes according to the selected difficulty level
     switch(event.target.textContent) {        
         case 'HARD':
             if (colorBoxes.length === 3) {
@@ -159,5 +158,5 @@ function difficultySelector(event) {
 }
         
 
-
+easyButton.classList.add('activated-difficulty')
 assignRandomColors()

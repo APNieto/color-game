@@ -29,12 +29,17 @@ LAYOUT
 .Mobile/responsive version, use percentages
     -> Investigate CSS float property;
        sample site uses vertical padding, no height
-.Smooth color change transition when new colors are loaded
-.Hover on difficulty selectors
-.Hover on color blocks (transform-scale)
+.Smooth color change transition when new colors are loaded  X
+.Hover on difficulty selectors  X
+.Hover on color blocks (transform-scale)  X
 .Selected difficulty background color change  X
 .Font
 .Correct/wrong answers:
     -Animation
-    -make them non-selectable (user-select: none)
+    -make them non-selectable (user-select: none)  X
+    -responsive
+.Header size
+.Navbar centering, responsive
 
+
+.Add an alert box stating the rules of the game in 2 lines
