@@ -8,13 +8,10 @@ LOGIC
     -Complete program reaction to guesses
 .Easy/hard buttons control amount of color boxes  X
 .Correct answers counter  X
-.Animation for correct/wrong answers
-    -Animated text
-    -Make toggle transition function to avoid repeating code  X
-    -Background color change on correct answer
+.Make toggle transition function to avoid repeating code  X  
 .Guess reaction: 
     -Wrong scenario: 
-        .Wrong text appears on box
+        .'Wrong' text appears on box
         .Box dissolves
         .Attempts diminish by one; if 0 is reached:
             -correct box is shown with text on it
@@ -22,9 +19,9 @@ LOGIC
             -new game loads
     -Correct scenario:
         .'Correct!' text appears on box        
-        .All others boxes, including failed attempts (whose 'wrong' text
-        disappears) and header bg color transition to correct color
-.Adapt to the hard difficulty mode
+        .All other boxes, including failed attempts (whose 'wrong' text
+        disappeared) and header bg color transition to correct color
+.Adapt to the hard difficulty mode  X
 
 
 
@@ -37,3 +34,7 @@ LAYOUT
 .Hover on color blocks (transform-scale)
 .Selected difficulty background color change  X
 .Font
+.Correct/wrong answers:
+    -Animation
+    -make them non-selectable (user-select: none)
+

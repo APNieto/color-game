@@ -1,4 +1,5 @@
 // DOM elements
+const header = document.getElementById('header')
 const headerColorCode = document.getElementById('header-color-code')
 const guessResult = document.getElementById('guess-result')
 const scoreSpan = document.getElementById('score')
@@ -7,14 +8,16 @@ const hardButton = document.getElementById('hard-button')
 const boxesContainer = document.getElementById('boxes-container')
 const colorBoxes = document.getElementsByClassName('color-boxes')
 
-console.log(colorBoxes); // TEST PRINT
 
 
 // Global variables
 let chosenRandomBoxNr, chosenRandomColor
+let correctBoxText
 let score = 0
-let attemptsLeft
-
+let currentDifficulty = 'EASY'
+const attemptsByDifficulty = {'EASY': 1, 'HARD': 2}
+let attemptsLeft = attemptsByDifficulty[currentDifficulty]
+let timeoutCorrectCase, timeoutWrongCase1, timeoutWrongCase2
 
 
 // Event listeners
@@ -41,6 +44,7 @@ function assignRandomColors() {
     // choose a random color and write its code in the site's header
     chosenRandomBoxNr = Math.floor(Math.random() * colorBoxes.length)
     chosenRandomColor = generateRandomColor()
+    header.style.backgroundColor = 'rgb(70, 130, 180)'
     headerColorCode.style.display = 'block'
     headerColorCode.textContent = chosenRandomColor.toUpperCase()
     
@@ -52,35 +56,69 @@ function assignRandomColors() {
             } else {
                 colorBoxes[index].style.backgroundColor = generateRandomColor()
             }
+            colorBoxes[index].classList.remove('color-boxes-hidden')
         }
     }
-}
 
-function toggleHeaderInfo(result) {
-    // Helper function: Momentarily hides the RGB info and shows
-    // the correct/wrong message of the last guess
-    headerColorCode.style.display = 'none'
-    guessResult.style.visibility = 'visible'
-    guessResult.style.opacity = '1'
-    guessResult.textContent = result
-    setTimeout(() => {
-        guessResult.style.visibility = 'hidden'
-        guessResult.style.opacity = '0'
-        assignRandomColors()
-    }, 1000)
+    // Update the score span text and reset attempts left
+    scoreSpan.textContent = score
+    attemptsLeft = attemptsByDifficulty[currentDifficulty]
+
 }
 
 function confirmGuess(event) {
-    // Updates the score and the header
-    // info area after each guess
+    // Briefly shows the guess result on the selected box;
+    // updates the score and the remaining attempts; if no 
+    // attempts left shows the correct box and resets the game 
+    let guessResultText = event.target.children[0]
+    //CORRECT CASE
     if (event.target.style.backgroundColor == chosenRandomColor) {
-        score++
-        scoreSpan.textContent = score
-        toggleHeaderInfo('Correct!')
-    } else {
-        score = 0
-        scoreSpan.textContent = score
-        toggleHeaderInfo('Wrong!')
+        if (timeoutCorrectCase || timeoutWrongCase1 || timeoutWrongCase2) {
+            //pass            
+        } else {            
+            guessResultText.classList.toggle('guess-result-visible')
+            guessResultText.textContent = 'Correct!'
+            header.style.backgroundColor = chosenRandomColor
+            for (let box of colorBoxes) {
+                box.style.backgroundColor = chosenRandomColor
+            }
+            score++
+            timeoutCorrectCase = setTimeout(() => {
+                timeoutCorrectCase = undefined
+                guessResultText.classList.toggle('guess-result-visible')            
+                assignRandomColors()
+            }, 1500);
+        }
+    }
+    //WRONG CASE
+    else {     
+        if (timeoutCorrectCase || timeoutWrongCase1 || timeoutWrongCase2) {
+            //pass
+        } else {
+            guessResultText.classList.toggle('guess-result-visible')
+            guessResultText.textContent = 'Wrong!'
+            event.target.classList.add('color-boxes-hidden')
+            timeoutWrongCase1 = setTimeout(() => {
+                timeoutWrongCase1 = undefined
+                guessResultText.classList.toggle('guess-result-visible')            
+                attemptsLeft--
+                if (attemptsLeft == 0) {
+                    for (let colorBox of colorBoxes) {
+                        if (colorBox.style.backgroundColor == chosenRandomColor) {
+                            correctBoxText = colorBox.children[0]
+                            correctBoxText.classList.toggle('guess-result-visible')
+                            correctBoxText.textContent = 'Correct one!'
+                        }
+                    }
+                    timeoutWrongCase2 = setTimeout(() => {
+                        timeoutWrongCase2 = undefined
+                        correctBoxText.classList.toggle('guess-result-visible')
+                        score = 0
+                        assignRandomColors()
+                    }, 1500)
+                }
+            }, 1500);
+        }
     }
 }
 
@@ -92,8 +130,7 @@ function difficultySelector(event) {
         case 'HARD':
             if (colorBoxes.length === 3) {
                 for (let i = 0; i < 3; i++) {
-                    let newBox = document.createElement('div')
-                    newBox.classList.add('color-boxes')
+                    let newBox = colorBoxes[0].cloneNode(true)
                     newBox.addEventListener('click', confirmGuess)
                     boxesContainer.appendChild(newBox)
                 }
@@ -101,8 +138,7 @@ function difficultySelector(event) {
             easyButton.classList.remove('activated-difficulty')
             hardButton.classList.add('activated-difficulty')
             score = 0
-            scoreSpan.textContent = score            
-            attemptsLeft = 2
+            currentDifficulty = 'HARD'
             assignRandomColors()
             break;            
         case 'EASY':
@@ -116,8 +152,7 @@ function difficultySelector(event) {
             hardButton.classList.remove('activated-difficulty')
             easyButton.classList.add('activated-difficulty')
             score = 0
-            scoreSpan.textContent = score
-            attemptsLeft = 3
+            currentDifficulty = 'EASY'
             assignRandomColors()
             break;
         }
