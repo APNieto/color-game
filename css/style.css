@@ -30,8 +30,8 @@ body {
 }
 #header-color-code{
     position: absolute;    
-    margin-top: -20px;    
-    font-size: 4rem;
+    margin-top: -20px;        
+    font-size: clamp(3rem, 10vw, 4rem);
     font-weight: lighter;
 }
 
