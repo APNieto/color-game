@@ -81,7 +81,7 @@ body {
     transition: background-color 300ms, transform 180ms;
 }
 .color-boxes:hover{
-    transform: scale(1.08);
+    transform: scale(1.08)!important;
 }
 .color-boxes-hidden{
     background-color: var(--background-color)!important;
@@ -101,8 +101,9 @@ body {
 }
 
 #version-nr{
+    padding-top: 30px;
     margin: auto;
-    width: fit-content;
+    width: min(87vw, 590px);
     font-size: 0.8rem;
     color: aliceblue;
 }

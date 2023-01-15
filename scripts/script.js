@@ -40,9 +40,9 @@ function generateRandomColor() {
     return randomRGBString
 }
 
-function assignRandomColors(element) {
-    if (element) {        
-        element.style.pointerEvents = 'none'
+function assignRandomColors() {
+    for (let element of colorBoxes) {        
+        element.style.transform = 'scale(1)'
     }
     // Choose a random number between 0 and 3 for the chosen box index;
     // choose a random color and write its code in the site's header
@@ -117,7 +117,7 @@ function confirmGuess(event) {
                         isGuessReactionRunning = false     
                         correctBoxText.classList.toggle('guess-result-visible')
                         score = 0
-                        assignRandomColors(event.target)
+                        assignRandomColors()
                     }, 1500)
                 }
             }, 1500);
