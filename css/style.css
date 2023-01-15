@@ -117,4 +117,5 @@ body {
     width: min(87vw, 590px);
     font-size: 0.8rem;
     color: aliceblue;
+    user-select: none;
 }
