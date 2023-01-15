@@ -42,7 +42,8 @@ function generateRandomColor() {
 
 function assignRandomColors() {
     for (let element of colorBoxes) {        
-        element.style.transform = 'scale(1)'
+        element.classList.remove('color-boxes')
+        element.classList.add('color-boxes')
     }
     // Choose a random number between 0 and 3 for the chosen box index;
     // choose a random color and write its code in the site's header
