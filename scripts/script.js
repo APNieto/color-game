@@ -81,6 +81,7 @@ function confirmGuess(event) {
         if (event.target.style.backgroundColor == chosenRandomColor) {         
                 isGuessReactionRunning = true     
                 guessResultText.classList.toggle('guess-result-visible')
+                guessResultText.classList.add('guess-result-correct')      
                 guessResultText.textContent = 'Correct!'
                 header.style.backgroundColor = chosenRandomColor
                 for (let box of colorBoxes) {
@@ -89,7 +90,8 @@ function confirmGuess(event) {
                 score++
                 setTimeout(() => {
                     isGuessReactionRunning = false     
-                    guessResultText.classList.toggle('guess-result-visible')            
+                    guessResultText.classList.toggle('guess-result-visible')
+                    guessResultText.classList.remove('guess-result-correct')                  
                     assignRandomColors()
                 }, 1500);
         }
@@ -97,11 +99,13 @@ function confirmGuess(event) {
         else {     
             isGuessReactionRunning = true     
             guessResultText.classList.toggle('guess-result-visible')
+            guessResultText.classList.add('guess-result-wrong')
             guessResultText.textContent = 'Wrong!'
             event.target.classList.add('color-boxes-hidden')
             setTimeout(() => {
                 isGuessReactionRunning = false     
-                guessResultText.classList.toggle('guess-result-visible')            
+                guessResultText.classList.toggle('guess-result-visible')      
+                guessResultText.classList.remove('guess-result-wrong')      
                 attemptsLeft--
                 if (attemptsLeft == 0) {
                     isGuessReactionRunning = true     
@@ -109,12 +113,14 @@ function confirmGuess(event) {
                         if (colorBox.style.backgroundColor == chosenRandomColor) {
                             correctBoxText = colorBox.children[0]
                             correctBoxText.classList.toggle('guess-result-visible')
+                            correctBoxText.classList.add('guess-result-correct-one')      
                             correctBoxText.textContent = 'Correct one!'
                         }
                     }
                     setTimeout(() => {
                         isGuessReactionRunning = false     
                         correctBoxText.classList.toggle('guess-result-visible')
+                        correctBoxText.classList.remove('guess-result-correct-one')      
                         score = 0
                         assignRandomColors()
                     }, 1500)

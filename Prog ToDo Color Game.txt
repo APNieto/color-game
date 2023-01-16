@@ -33,13 +33,12 @@ LAYOUT
 .Hover on difficulty selectors  X
 .Hover on color blocks (transform-scale)  X
 .Selected difficulty background color change  X
-.Font
-.Correct/wrong answers:
-    -Animation
+.Font  X
+.Correct/wrong answers:    
     -make them non-selectable (user-select: none)  X
-    -responsive
-.Header size
-.Navbar centering, responsive
+    -responsive  X
+.Header size  X
+.Navbar centering, responsive  X
 
 
 .Add an alert box stating the rules of the game in 2 lines
