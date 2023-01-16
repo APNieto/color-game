@@ -109,10 +109,9 @@ body {
 }
 .guess-result{
     position: absolute;
-    visibility: visible;     /* TESTING, CHANGE BACK TO HIDDEN  */    
-    opacity: 1;              /* TESTING, CHANGE BACK TO 0  */    
-    font-size:  min(6.74vw, 2.8rem);       /* TESTING, DELETE */    
-    text-align: center;             /* TESTING, DELETE */    
+    visibility: hidden;
+    opacity: 0;
+    font-size:  min(6.74vw, 2.8rem);
     top: 33%;     
     left: 2%;
     margin-top: 0;
@@ -128,19 +127,16 @@ body {
 .guess-result-wrong{
     top: 32%;     
     left: 10%;
-    font-size:  min(6.74vw, 2.8rem); 
     color: red;
 }
 .guess-result-correct{
     top: 33%;     
     left: 2%;
-    font-size:  min(6.74vw, 2.8rem); 
     color: black;
 }
 .guess-result-correct-one{
     top: 24%;     
     left: 10%;
-    font-size:  min(6.74vw, 2.8rem); 
     text-align: center;
     color: black;
 }
