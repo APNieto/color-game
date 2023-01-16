@@ -41,18 +41,27 @@ body {
 
 
 /* Navbar */
+#navbar-container{
+    background-color: rgb(255, 255, 255);
+}
 #navbar{
+    width: min(90vw, 700px);
+    margin: 0 auto;    
     display: flex;
     justify-content: space-around;
-    background-color: rgb(255, 255, 255);
+    align-items: center;
     color: var(--primary-header-color);
-    font-size: 1.3rem;
+    font-size: clamp(1rem, 4vw, 1.3rem);
 }
 #difficulty-selectors{
     display: flex;
+    align-items: center;
+}
+#difficulty-selectors > div:first-child{
+    margin-right: 10px;
 }
 .difficulty-selector{
-    margin: 0 20px;
+    margin: 0 5px;
     cursor: pointer;
     user-select: none;
     padding: 4px 10px;    
@@ -62,7 +71,15 @@ body {
     background-color: var(--primary-header-color);
     color: white;
 }
-
+@media (max-width: 500px) {
+    #difficulty-selectors > div:first-child{
+        margin-right: 4px;
+    }    
+    .difficulty-selector{
+        margin: 0 2px;
+        padding: 4px 5px;    
+    }
+}
 
 
 /* Boxes container */
