@@ -168,3 +168,4 @@ function difficultySelector(event) {
 
 easyButton.classList.add('activated-difficulty')
 assignRandomColors()
+alert('Guess what color matches with the (RED, GREEN, BLUE) code shown above!')

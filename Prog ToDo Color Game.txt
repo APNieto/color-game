@@ -41,4 +41,4 @@ LAYOUT
 .Navbar centering, responsive  X
 
 
-.Add an alert box stating the rules of the game in 2 lines
+.Add an alert box stating the rules of the game in 2 lines  x
